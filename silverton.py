@@ -1,6 +1,7 @@
 from utils import *
 class Game:
-    idn = 1
+    turn = 1
+    idn = get_idn(turn)
     items = {
         'gold': {
             'label':'Gold', 'value': 4, 'range': gold_range, 'update': update_gold
@@ -59,12 +60,15 @@ class Game:
 
             self.items[key]['value'] = new_value
 
-        # now that prices are set, increment idn
-        self.idn += 1
+        # now that prices are set, increment turn
+        self.turn += 1
         self.print_prices()
 
     def print_prices(self):
-        print('IDN: '+str(self.idn))
+        turn_label = 'Turn: '+str(self.turn)
+        if self.turn % 4 == 0:
+            turn_label += ' - WINTER!'
+        print(turn_label)
         for item in self.items.values():
             name = item.get('label')
             value = item.get('value')
